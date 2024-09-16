@@ -1,0 +1,11 @@
+#!/bin/bash
+set -eo pipefail
+
+cd /usr/src/app/social_media_platform_project/
+#Apply database migrations
+echo “Apply database migrations”
+python manage.py migrate --settings=${DJANGO_SETTINGS_MODULE}
+
+#Start server
+echo “Starting server”
+gunicorn -b 0.0.0.0:8000 --reload --workers=3 --threads=3 --worker-connections=1000 --worker-class=gthread --access-logfile - --error-logfile - --log-level debug social_media_platform_project.wsgi

@@ -1,0 +1,10 @@
+FROM python:3-alpine
+ENV PYTHONUNBUFFERED 1
+RUN apk add --no-cache bash python3-dev postgresql-dev linux-headers gcc musl-dev libmagic
+WORKDIR /usr/src/app
+COPY ./social_media_platform_project/requirements/base.txt ./
+COPY ./social_media_platform_project/requirements/dev.txt ./
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r dev.txt && export REVISION=echo $REVISION
+COPY . .
+CMD ["./bin/start"]

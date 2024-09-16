@@ -1,0 +1,49 @@
+version: "3.7"
+
+services:
+  db:
+    image: postgres:16.2-alpine
+    volumes:
+      - postgres_data_social_media_platform:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_PASSWORD: CHANGE_PASSWORD
+      POSTGRES_USER: social_media_platform_user
+      POSTGRES_DB: social_media_platform
+    container_name: social_media_platform_db
+    ports:
+      - 5432:5432
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.local
+    volumes:
+      - ../:/usr/src/app/
+    environment:
+      POSTGRES_NAME: social_media_platform
+      POSTGRES_USER: social_media_platform_user
+      POSTGRES_PASSWORD: CHANGE_PASSWORD
+      POSTGRES_HOST: social_media_platform_db
+      POSTGRES_PORT: 5432
+      DJANGO_SECRET_KEY: CHANGE_SECRET_KEY
+      DJANGO_SETTINGS_MODULE: social_media_platform_project.settings
+      DJANGO_LOGLEVEL: CRITICAL
+      DEBUG: 1 # CHANGE
+    depends_on:
+      - db
+    stdin_open: true
+    tty: true
+    container_name: social_media_platform_backend
+    ports:
+      - 8001:8000
+  nginx:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.nginx.local
+    depends_on:
+      - backend
+    container_name: social_media_platform_nginx
+    ports:
+      - 8081:80
+volumes:
+  postgres_data_social_media_platform:
+
