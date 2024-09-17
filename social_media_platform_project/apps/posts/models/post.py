@@ -11,5 +11,9 @@ class Post(SoftDeleteModel):
     content = models.CharField(max_length=600)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        verbose_name = 'Post'
+        verbose_name_plural = 'Posts'
+
     def __str__(self) -> str:
-        return "{} ({})".format(self.author.user.email, self.id)
+        return "{} ({})".format(self.author.email, self.id)

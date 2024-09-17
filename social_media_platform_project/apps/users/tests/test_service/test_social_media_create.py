@@ -10,10 +10,10 @@ class SocialMedialServiceCreateTest(TestCase):
             email='email@email.com',
             password='password'
         )
-        self.assertEqual(sm_user.user.username, 'username')
-        self.assertEqual(sm_user.user.email, 'email@email.com')
-        self.assertIsNotNone(sm_user.user.password)
-        sm_user = SocialMediaUser.objects.get(user__email='email@email.com')
-        self.assertEqual(sm_user.user.username, 'username')
-        self.assertEqual(sm_user.user.email, 'email@email.com')
-        self.assertIsNotNone(sm_user.user.password)
+        self.assertEqual(sm_user.username, 'username')
+        self.assertEqual(sm_user.email, 'email@email.com')
+        self.assertIsNotNone(sm_user.password)
+        sm_user = SocialMediaUser.objects.get(email='email@email.com')
+        self.assertEqual(sm_user.username, 'username')
+        self.assertEqual(sm_user.email, 'email@email.com')
+        self.assertIsNotNone(sm_user.password)

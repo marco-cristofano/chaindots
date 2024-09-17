@@ -11,11 +11,11 @@ class PostServiceTest(TestCase):
             email='email@email.com',
             password='password'
         )
-        post = PostService.create(sm_user.user.email, 'content')
-        self.assertEqual(post.author.user.username, 'username')
-        self.assertEqual(post.author.user.email, 'email@email.com')
+        post = PostService.create(sm_user.username, 'content')
+        self.assertEqual(post.author.username, 'username')
+        self.assertEqual(post.author.email, 'email@email.com')
         self.assertEqual(post.content, 'content')
         post = Post.objects.get(id=post.id)
-        self.assertEqual(post.author.user.username, 'username')
-        self.assertEqual(post.author.user.email, 'email@email.com')
+        self.assertEqual(post.author.username, 'username')
+        self.assertEqual(post.author.email, 'email@email.com')
         self.assertEqual(post.content, 'content')

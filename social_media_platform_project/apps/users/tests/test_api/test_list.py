@@ -1,3 +1,4 @@
+from rest_framework import status
 from rest_framework.test import APITestCase
 from apps.users.services.social_media_user import SocialMediaUserService
 
@@ -24,7 +25,7 @@ class APIListUserTest(APITestCase):
 
     def test_list_with_order(self):
         response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 3)
         user = response.data[0]
         self.assertEqual(user['username'], 'username1')

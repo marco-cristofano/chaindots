@@ -17,8 +17,8 @@ class SocialMedialServiceAddFollowTest(TestCase):
         )
 
         SocialMediaUserService.add_follow(
-            sm_user,
-            sm_user_to_follow
+            sm_user.id,
+            sm_user_to_follow.id
         )
         self.assertEqual(sm_user.followed.count(), 1)
         self.assertEqual(sm_user.followers.count(), 0)

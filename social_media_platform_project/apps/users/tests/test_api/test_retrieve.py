@@ -1,3 +1,4 @@
+from rest_framework import status
 from rest_framework.test import APITestCase
 from apps.users.services.social_media_user import SocialMediaUserService
 from apps.posts.services.post import PostService
@@ -26,7 +27,7 @@ class APIRetrieveUserPostAndCommentsTest(APITestCase):
     def test_retrieve_zero_posts_and_comments(self):
         url = self.get_url(self.user_1.id)
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 7)
         user = response.data
         self.assertEqual(user['id'], self.user_1.id)
@@ -36,14 +37,14 @@ class APIRetrieveUserPostAndCommentsTest(APITestCase):
         self.assertEqual(user['total_comments'], 0)
 
     def test_retrieve_two_posts_and_comments(self):
-        post_1 = PostService.create(self.user_1.user.email, 'content1')
-        post_2 = PostService.create(self.user_1.user.email, 'content2')
-        CommentService.create(self.user_1.user.email, post_1, 'connent1')
-        CommentService.create(self.user_1.user.email, post_2, 'connent2')
+        post_1 = PostService.create(self.user_1.username, 'content1')
+        post_2 = PostService.create(self.user_1.username, 'content2')
+        CommentService.create(self.user_1.username, post_1, 'connent1')
+        CommentService.create(self.user_1.username, post_2, 'connent2')
 
         url = self.get_url(self.user_1.id)
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 7)
         user = response.data
         self.assertEqual(user['id'], self.user_1.id)
@@ -53,14 +54,14 @@ class APIRetrieveUserPostAndCommentsTest(APITestCase):
         self.assertEqual(user['total_comments'], 2)
 
     def test_retrieve_two_posts_and_comments_in_another_user(self):
-        post_1 = PostService.create(self.user_1.user.email, 'content1')
-        post_2 = PostService.create(self.user_1.user.email, 'content2')
-        CommentService.create(self.user_1.user.email, post_1, 'connent1')
-        CommentService.create(self.user_1.user.email, post_2, 'connent2')
+        post_1 = PostService.create(self.user_1.username, 'content1')
+        post_2 = PostService.create(self.user_1.username, 'content2')
+        CommentService.create(self.user_1.username, post_1, 'connent1')
+        CommentService.create(self.user_1.username, post_2, 'connent2')
 
         url = self.get_url(self.user_2.id)
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 7)
         user = response.data
         self.assertEqual(user['id'], self.user_2.id)
@@ -95,11 +96,11 @@ class APIRetrieveUserFollowedAndFollowersTest(APITestCase):
         return cls.url + str(pk) + '/'
 
     def test_zero_followed_and_followers(self):
-        SocialMediaUserService.add_follow(self.user, self.user_to_follow)
+        SocialMediaUserService.add_follow(self.user.id, self.user_to_follow.id)
 
         url = self.get_url(self.single_user.id)
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 7)
         user = response.data
         self.assertEqual(user['id'], self.single_user.id)
@@ -109,11 +110,11 @@ class APIRetrieveUserFollowedAndFollowersTest(APITestCase):
         self.assertEqual(len(response.data['followers']), 0)
 
     def test_one_followed(self):
-        SocialMediaUserService.add_follow(self.user, self.user_to_follow)
+        SocialMediaUserService.add_follow(self.user.id, self.user_to_follow.id)
 
         url = self.get_url(self.user.id)
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 7)
         user = response.data
         self.assertEqual(user['id'], self.user.id)
@@ -127,11 +128,11 @@ class APIRetrieveUserFollowedAndFollowersTest(APITestCase):
         self.assertEqual(len(response.data['followers']), 0)
 
     def test_one_follower(self):
-        SocialMediaUserService.add_follow(self.user, self.user_to_follow)
+        SocialMediaUserService.add_follow(self.user.id, self.user_to_follow.id)
 
         url = self.get_url(self.user_to_follow.id)
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 7)
         user = response.data
         self.assertEqual(user['id'], self.user_to_follow.id)
@@ -145,12 +146,12 @@ class APIRetrieveUserFollowedAndFollowersTest(APITestCase):
         self.assertEqual(len(response.data['followed']), 0)
 
     def test_double_followed(self):
-        SocialMediaUserService.add_follow(self.user, self.user_to_follow)
-        SocialMediaUserService.add_follow(self.user, self.user_to_follow)
+        SocialMediaUserService.add_follow(self.user.id, self.user_to_follow.id)
+        SocialMediaUserService.add_follow(self.user.id, self.user_to_follow.id)
 
         url = self.get_url(self.user.id)
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 7)
         user = response.data
         self.assertEqual(user['id'], self.user.id)
@@ -164,12 +165,12 @@ class APIRetrieveUserFollowedAndFollowersTest(APITestCase):
         self.assertEqual(len(response.data['followers']), 0)
 
     def test_double_followers(self):
-        SocialMediaUserService.add_follow(self.user, self.user_to_follow)
-        SocialMediaUserService.add_follow(self.user, self.user_to_follow)
+        SocialMediaUserService.add_follow(self.user.id, self.user_to_follow.id)
+        SocialMediaUserService.add_follow(self.user.id, self.user_to_follow.id)
 
         url = self.get_url(self.user_to_follow.id)
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 7)
         user = response.data
         self.assertEqual(user['id'], self.user_to_follow.id)
@@ -183,12 +184,12 @@ class APIRetrieveUserFollowedAndFollowersTest(APITestCase):
         self.assertEqual(len(response.data['followed']), 0)
 
     def test_followed_and_simultaneous_follower(self):
-        SocialMediaUserService.add_follow(self.user, self.user_to_follow)
-        SocialMediaUserService.add_follow(self.user_to_follow, self.user)
+        SocialMediaUserService.add_follow(self.user.id, self.user_to_follow.id)
+        SocialMediaUserService.add_follow(self.user_to_follow.id, self.user.id)
 
         url = self.get_url(self.user_to_follow.id)
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 7)
         user = response.data
         self.assertEqual(user['id'], self.user_to_follow.id)

@@ -27,14 +27,14 @@ services:
       DJANGO_SECRET_KEY: CHANGE_SECRET_KEY
       DJANGO_SETTINGS_MODULE: social_media_platform_project.settings
       DJANGO_LOGLEVEL: CRITICAL
-      DEBUG: 1 # CHANGE
+      DEBUG: 1
     depends_on:
       - db
     stdin_open: true
     tty: true
     container_name: social_media_platform_backend
     ports:
-      - 8001:8000
+      - 8001:8000 # Not necesary
   nginx:
     build:
       context: ..

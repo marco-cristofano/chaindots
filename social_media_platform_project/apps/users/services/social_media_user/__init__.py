@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.db.models import Count
 from apps.users.models import SocialMediaUser
 
@@ -18,24 +17,23 @@ class SocialMediaUserService:
         Returns:
             SocialMediaUser: New social media user
         """
-        user = User.objects.create_user(
+        sm_user = cls.model.objects.create(
             username=username,
             email=email,
             password=password
         )
-        sm_user = cls.model.objects.create(user=user)
         return sm_user
 
     @classmethod
-    def add_follow(
-                cls, user: SocialMediaUser, user_to_follow: SocialMediaUser
-            ) -> None:
+    def add_follow(cls, user_id: int, user_to_follow_id: int) -> None:
         """Adds user to follow.
 
         Args:
-            user (SocialMediaUser): id of user
-            user_to_follow (SocialMediaUser): id of user to follow
+            user (int): id of user
+            user_to_follow (int): id of user to follow
         """
+        user = SocialMediaUser.objects.get(id=user_id)
+        user_to_follow = SocialMediaUser.objects.get(id=user_to_follow_id)
         user.followed.add(user_to_follow)
         user.save()
 
@@ -49,7 +47,6 @@ class SocialMediaUserService:
         Returns:
             SocialMediaUser: Insance of social media user
         """
-        cls.model.objects.get(id=social_media_user_id).posts.all()
         user = cls.model.objects.filter(
             id=social_media_user_id
         ).prefetch_related(

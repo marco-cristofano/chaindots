@@ -10,10 +10,10 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r dev.txt
 
 ADD . ./
-#RUN mkdir /usr/src/app/social_media_platform_project/static
-#RUN DJANGO_SECRET_KEY=$(base64 /dev/urandom | head -c50) python /usr/src/app/social_media_platform_project/manage.py collectstatic --noinput --settings=social_media_platform_project.settings.prod
+RUN mkdir /usr/src/app/social_media_platform_project/static
+RUN DJANGO_SECRET_KEY=$(base64 /dev/urandom | head -c50) python /usr/src/app/social_media_platform_project/manage.py collectstatic --noinput --settings=social_media_platform_project.settings
 
 FROM nginx:alpine
 RUN rm /etc/nginx/conf.d/default.conf
 COPY ./docker/nginx.conf /etc/nginx/conf.d
-#COPY --from=builder  /usr/src/app/social_media_platform_project/staticfiles /static
+COPY --from=builder  /usr/src/app/social_media_platform_project/staticfiles /static

@@ -1,11 +1,8 @@
 from rest_framework import serializers
-
 from apps.users.models import SocialMediaUser
 
 
 class SocialMediaUserSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(source='user.email')
-    username = serializers.CharField(source='user.username')
 
     class Meta:
         model = SocialMediaUser
@@ -32,4 +29,15 @@ class SocialMediaUserDetailedSerializer(SocialMediaUserSerializer):
             'total_comments',
             'followed',
             'followers'
+        ]
+
+
+class SocialMediaUserCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = SocialMediaUser
+        fields = [
+            'email',
+            'username',
+            'password',
         ]

@@ -17,24 +17,24 @@ class PostServiceTest(TestCase):
             email='username_post_creator@email.com',
             password='password'
         )
-        post = PostService.create('username_post_creator@email.com', 'content')
+        post = PostService.create('username_post_creator', 'content')
         comment = CommentService.create(
-            author_email='username_comment_creator@email.com',
+            author_username='username_comment_creator',
             post=post,
             comment='comment'
         )
         self.assertEqual(
-            comment.author.user.username, 'username_comment_creator'
+            comment.author.username, 'username_comment_creator'
         )
         self.assertEqual(
-            comment.author.user.email, 'username_comment_creator@email.com'
+            comment.author.email, 'username_comment_creator@email.com'
         )
         self.assertEqual(comment.comment, 'comment')
         comment = Comment.objects.get(id=comment.id)
         self.assertEqual(
-            comment.author.user.username, 'username_comment_creator'
+            comment.author.username, 'username_comment_creator'
         )
         self.assertEqual(
-            comment.author.user.email, 'username_comment_creator@email.com'
+            comment.author.email, 'username_comment_creator@email.com'
         )
         self.assertEqual(comment.comment, 'comment')

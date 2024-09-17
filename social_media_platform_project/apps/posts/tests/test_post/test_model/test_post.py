@@ -10,7 +10,7 @@ class PostTest(TestCase):
             email='email@email.com',
             password='password'
         )
-        self.post = PostService.create('email@email.com', 'content')
+        self.post = PostService.create('username', 'content')
 
     def test_str(self):
         str_format = "email@email.com ({})".format(self.post.id)

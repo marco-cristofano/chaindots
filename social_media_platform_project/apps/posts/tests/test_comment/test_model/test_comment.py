@@ -16,9 +16,9 @@ class CommentTest(TestCase):
             email='username_post_creator@email.com',
             password='password'
         )
-        post = PostService.create('username_post_creator@email.com', 'content')
+        post = PostService.create('username_post_creator', 'content')
         self.comment = CommentService.create(
-            'username_comment_creator@email.com',
+            'username_comment_creator',
             post,
             'comment'
         )
