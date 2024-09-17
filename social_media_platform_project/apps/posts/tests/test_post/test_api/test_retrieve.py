@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.test import APITestCase
+from utils.tests.apt_test import CustomAPITestCase as APITestCase
 from apps.users.services.social_media_user import SocialMediaUserService
 
 from apps.posts.services.post import PostService
@@ -10,6 +10,7 @@ class APIRetrieveTest(APITestCase):
     url = '/api/posts/'
 
     def setUp(self):
+        super().setUp()
         self.user = SocialMediaUserService.create(
             username='username',
             email='email@email.com',

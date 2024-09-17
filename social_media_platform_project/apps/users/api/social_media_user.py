@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from utils.exists_or_404 import exists_object_or_404
 
 from drf_spectacular.utils import extend_schema
 from rest_framework import (
@@ -31,7 +31,7 @@ class SocialMediaUserViewset(viewsets.ModelViewSet):
 
     @extend_schema(**DOC.doc_user_retrieve)
     def retrieve(self, request, pk=None):
-        get_object_or_404(SocialMediaUser, pk=pk)  # TODO: no es eficiente
+        exists_object_or_404(SocialMediaUser, pk)
         user = SocialMediaUserService.detailed(pk)
         serializer = self.detailed_serializer_class(user)
         return Response(serializer.data)
@@ -47,7 +47,7 @@ class SocialMediaUserViewset(viewsets.ModelViewSet):
     @extend_schema(**DOC.doc_add_follow)
     @action(detail=True, methods=['post'], url_path='follow/(?P<user_to_follow_pk>[^/.]+)')
     def add_follow(self, request, pk=None, user_to_follow_pk=None):
-        get_object_or_404(SocialMediaUser, pk=pk)  # TODO: no es eficiente
-        get_object_or_404(SocialMediaUser, pk=user_to_follow_pk)  # TODO: no es eficiente
+        exists_object_or_404(SocialMediaUser, pk)
+        exists_object_or_404(SocialMediaUser, user_to_follow_pk)
         SocialMediaUserService.add_follow(pk, user_to_follow_pk)
         return Response(status=status.HTTP_204_NO_CONTENT)

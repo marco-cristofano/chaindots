@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.test import APITestCase
+from utils.tests.apt_test import CustomAPITestCase as APITestCase
 from apps.users.services.social_media_user import SocialMediaUserService
 from apps.posts.services.post import PostService
 from apps.posts.services.comment import CommentService
@@ -9,6 +9,7 @@ class APIRetrieveUserPostAndCommentsTest(APITestCase):
     url = '/api/users/'
 
     def setUp(self):
+        super().setUp()
         self.user_1 = SocialMediaUserService.create(
             username='username1',
             email='email1@email.com',
@@ -75,6 +76,7 @@ class APIRetrieveUserFollowedAndFollowersTest(APITestCase):
     url = '/api/users/'
 
     def setUp(self):
+        super().setUp()
         self.user = SocialMediaUserService.create(
             username='username',
             email='email@email.com',

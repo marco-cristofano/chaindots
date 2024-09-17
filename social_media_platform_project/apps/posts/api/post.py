@@ -1,4 +1,3 @@
-from django.shortcuts import get_object_or_404
 from drf_spectacular.utils import extend_schema
 from rest_framework import (
     status,
@@ -6,6 +5,7 @@ from rest_framework import (
 )
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from utils.exists_or_404 import exists_object_or_404
 
 from apps.posts.documentation import post as DOC
 from apps.posts.models import Post
@@ -61,7 +61,7 @@ class PostViewset(PostsPagination, viewsets.ModelViewSet):
 
     @extend_schema(**DOC.doc_post_retrieve)
     def retrieve(self, request, pk=None):
-        get_object_or_404(Post, pk=pk)  # TODO: no es eficiente
+        exists_object_or_404(Post, pk)
         user = PostService.detailed(post_id=pk)
         serializer = self.detailed_serializer_class(user)
         return Response(serializer.data)
@@ -78,7 +78,7 @@ class PostViewset(PostsPagination, viewsets.ModelViewSet):
     @extend_schema(**DOC.doc_post_get_comments)
     @action(detail=True, methods=['GET', 'POST'], url_path='comments')
     def comments(self, request, pk=None):
-        get_object_or_404(Post, pk=pk)  # TODO: no es eficiente
+        exists_object_or_404(Post, pk)
         if request.method == 'GET':
             comments = PostService.get_all_comments(post_id=pk)
             data = CommentSerializer(comments, many=True).data

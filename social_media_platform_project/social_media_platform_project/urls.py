@@ -8,10 +8,12 @@ from drf_spectacular.views import (
     SpectacularRedocView,
     SpectacularSwaggerView
 )
+from apps.users.api.login import LoginView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('apps.api.urls')),
+    path('login/', LoginView.as_view(), name='login'),
     path(
         'schema/',
         SpectacularAPIView.as_view(),
@@ -25,5 +27,6 @@ urlpatterns = [
         'redoc/',
         SpectacularRedocView.as_view(url_name='schema'),
         name='redoc'
-    )
+    ),
+    path('authentication/', include('dj_rest_auth.urls'))
 ]

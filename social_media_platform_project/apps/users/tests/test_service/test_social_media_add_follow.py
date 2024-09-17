@@ -1,6 +1,5 @@
 from django.test import TestCase
 from apps.users.services.social_media_user import SocialMediaUserService
-from apps.users.models.social_media_user import SocialMediaUser
 
 
 class SocialMedialServiceAddFollowTest(TestCase):

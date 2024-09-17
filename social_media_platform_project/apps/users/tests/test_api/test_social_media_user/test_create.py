@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.test import APITestCase
+from utils.tests.apt_test import CustomAPITestCase as APITestCase
 
 
 class APICreateUserTest(APITestCase):

@@ -1,5 +1,6 @@
 from django.db.models import Count
 from apps.users.models import SocialMediaUser
+from apps.users.services.authtoken import AuthTokenService
 
 
 class SocialMediaUserService:
@@ -20,8 +21,9 @@ class SocialMediaUserService:
         sm_user = cls.model.objects.create(
             username=username,
             email=email,
-            password=password
+            password=password,
         )
+        AuthTokenService.create_token(sm_user)
         return sm_user
 
     @classmethod
