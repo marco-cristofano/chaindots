@@ -3,7 +3,7 @@ from django.http import Http404
 
 def exists_object_or_404(model, id: int) -> bool:
     """
-    Return true if object exists or raise 404 error.
+    Return True if object exists or raise 404 error.
     args:
         model: model class
         id: id of object
