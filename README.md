@@ -148,3 +148,4 @@ When using model serializers there is a risk that they run extra queries to obta
 
     ```
 
+- The retrieval of the last three comments of a post can probably be improved by performing subqueries on the initial query. In this case I just delegated that responsibility to the serializer.
