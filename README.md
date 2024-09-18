@@ -38,10 +38,8 @@ The resolution was based on the requirements found in the file [Challenge](./CHA
     ```
     <img title="Coverage" alt="coverage" src="./coverage.png">
 
-
-
-
-- API Documentation: [Swagger](http://127.0.0.1:8081/swagger) 
+- API Documentation: [Swagger](http://127.0.0.1:8081/swagger) *Es una básica implementacion de documentacion. No se pueden probar los endpoints desde swagger, solo ver la documentacion.*
+  
 
 ## System characteristics
 
