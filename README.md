@@ -35,11 +35,20 @@ The resolution was based on the requirements found in the file [Challenge](./CHA
 - Running coverage (in container)
     ```bash
     coverage run --source="." manage.py test
+    coverage report
     ```
     <img title="Coverage" alt="coverage" src="./coverage.png">
 
-- API Documentation: [Swagger](http://127.0.0.1:8081/swagger) *Es una básica implementacion de documentacion. No se pueden probar los endpoints desde swagger, solo ver la documentacion.*
-  
+- API Documentation: [Swagger](http://127.0.0.1:8081/swagger) *It is a basic implementation of documentation. You cannot test the endpoints from swagger, only view the documentation.*
+
+- By default a “Social Media User” is created with username “admin” and password “admin”.
+    ```bash
+    curl -X POST 127.0.0.1:8081/login/ -d username=admin -d password=admin
+    curl -X GET 127.0.0.1:8081/api/users/ -H "Authorization: Token <TOKEN>"
+    ```
+
+- System: [Site](http://127.0.0.1:8081/)
+
 
 ## System characteristics
 

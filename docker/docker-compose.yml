@@ -29,7 +29,8 @@ services:
       DJANGO_LOGLEVEL: CRITICAL
       DEBUG: 0
     depends_on:
-      - db
+        db:
+          condition: service_started
     stdin_open: true
     tty: true
     container_name: social_media_platform_backend
