@@ -13,6 +13,7 @@ from utils.exists_or_404 import exists_object_or_404
 from apps.posts.documentation import post as DOC
 from apps.posts.models import Post
 from apps.posts.serializers.comment import (
+    CommentCreatedSerializer,
     CommentCreateSerializer,
     CommentSerializer
 )
@@ -87,5 +88,5 @@ class PostViewset(PostsPagination, viewsets.ModelViewSet):
             serializer = CommentCreateSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             comment = serializer.save()
-            data = CommentSerializer(comment).data
+            data = CommentCreatedSerializer(comment).data
             return Response(data, status=status.HTTP_201_CREATED)

@@ -35,7 +35,7 @@ class SocialMediaUserService:
             user_to_follow_id (int): id of user to follow
         """
         user = cls.model.objects.get(id=user_id)
-        user_to_follow = SocialMediaUser.objects.get(id=user_to_follow_id)
+        user_to_follow = cls.model.objects.get(id=user_to_follow_id)
         user.followed.add(user_to_follow)
         user.save()
 

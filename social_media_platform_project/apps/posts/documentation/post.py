@@ -2,6 +2,7 @@ from drf_spectacular.utils import OpenApiResponse, OpenApiParameter
 from drf_spectacular.types import OpenApiTypes
 
 from apps.posts.serializers.comment import (
+    CommentCreatedSerializer,
     CommentCreateSerializer,
     CommentSerializer
 )
@@ -91,7 +92,7 @@ doc_post_post_comments = {
     'responses': {
         '201': OpenApiResponse(
             description='Operación exitosa.',
-            response=CommentSerializer,
+            response=CommentCreatedSerializer,
             ),
     },
     'operation_id': 'Create a new comment for specific post.',

@@ -41,6 +41,9 @@ class PostService:
             id=post_id
         ).select_related(
             'author',
+        ).prefetch_related(
+            'comments',
+            'comments__author'
         ).get()
         return user
 
@@ -53,7 +56,9 @@ class PostService:
         Returns:
             comments: queryset of comments
         """
-        comments = cls.model.objects.get(
-            id=post_id
-        ).comments.order_by('-created_at')
+        comments = Comment.objects.filter(
+            post__id=post_id
+        ).select_related(
+            'author'
+        ).order_by('-created_at')
         return comments

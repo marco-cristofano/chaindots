@@ -38,12 +38,11 @@ class APIPostCommentsTest(APITestCase):
         response = self.client.post(url, params)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         comment = response.data
-        self.assertEqual(len(comment), 4)
+        self.assertEqual(len(comment), 5)
         self.assertIsNotNone(comment['id'])
+        self.assertIsNotNone(comment['post'])
         self.assertEqual(comment['comment'], 'comment1')
-        self.assertEqual(comment['author']['id'], self.user_2.id)
-        self.assertEqual(comment['author']['email'], self.user_2.email)
-        self.assertEqual(comment['author']['username'], self.user_2.username)
+        self.assertEqual(comment['author'], self.user_2.id)
         self.assertIsNotNone(comment['created_at'])
 
 

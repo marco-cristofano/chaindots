@@ -106,8 +106,45 @@ When using model serializers there is a risk that they run extra queries to obta
 
     ```
 
+4. The following query may have originated in the Post model. However its origin is the Comment model to save a query to the Database.
+   ```python
+        @classmethod
+        def get_all_comments(cls, post_id: int) -> QuerySet[Comment]:
+            """Returns all comments of post.
 
+            Args:
+                post_id (int): id of post
+            Returns:
+                comments: queryset of comments
+            """
+            comments = Comment.objects.filter(
+                post__id=post_id
+            ).select_related(
+                'author'
+            ).order_by('-created_at')
+            return comments
+    ```
+
+5. The created_at fields of the Comment and Post model were defined as indexes. Although this worsens the creation and update time, there is an advantage at the time of sorting.
 
 ## Possible improvements
 
 - It is a good practice (in some cases) to prevent services from directly querying the database. In this case I did not implement repositories but it could be an improvement in the separation of responsibilities for the system.
+
+- The following service can be made more efficient by directly receiving the “SocialMediaUser” instances. To do this in the API you must replace the exists_object_or_404 methods by get_object_or_404.
+    ```python
+        @classmethod
+        def add_follow(cls, user_id: int, user_to_follow_id: int) -> None:
+            """Adds user to follow.
+
+            Args:
+                user_id (int): id of user
+                user_to_follow_id (int): id of user to follow
+            """
+            user = cls.model.objects.get(id=user_id)
+            user_to_follow = cls.model.objects.get(id=user_to_follow_id)
+            user.followed.add(user_to_follow)
+            user.save()
+
+    ```
+

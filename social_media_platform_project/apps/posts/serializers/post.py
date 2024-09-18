@@ -29,9 +29,7 @@ class PostDetailedSerializer(serializers.ModelSerializer):
     last_comments = serializers.SerializerMethodField()
 
     def get_last_comments(self, post):
-        comments = post.comments.select_related(
-            'author'
-        ).order_by('-created_at')[:3]  # TODO: llevar a la query
+        comments = post.comments.order_by('-created_at')[:3]
         return CommentSerializer(comments, many=True).data
 
     class Meta:

@@ -15,7 +15,7 @@ class Comment(models.Model):
         related_name='comments'
     )
     comment = models.CharField(max_length=600)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
 
     class Meta:
         verbose_name = 'Comment'
