@@ -27,7 +27,7 @@ services:
       DJANGO_SECRET_KEY: CHANGE_SECRET_KEY
       DJANGO_SETTINGS_MODULE: social_media_platform_project.settings
       DJANGO_LOGLEVEL: CRITICAL
-      DEBUG: 1
+      DEBUG: 0
     depends_on:
       - db
     stdin_open: true

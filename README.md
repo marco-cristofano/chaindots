@@ -46,7 +46,7 @@ The resolution was based on the requirements found in the file [Challenge](./CHA
 ## System characteristics
 
 The system has three services:
-- Backend: Python/Django.
+- Backend: Python/Django (4.2 LTS).
 - Database: PostgreSQL.
 - Web Server: Ngix.
 
@@ -61,6 +61,7 @@ Django Rest Framework induces to have logic in the models and serializers.
 - The definition of the URLs are outside of the applications, this does not necessarily have to be so. For this example I considered that it was not the responsibility of each application to define its URLs.
 - In general I used viewsets blocking some of their methods. However, it may be considered more appropriate to inherit directly from the appropriate mixins.
 - For simplicity and to use some of the Django Rest Framework tools I incorporated several ModelSerializers. In case you need to improve the performance of some endpoint you can exclude them and take their functionality to the query in the database.
+- For filtering and paging use tools provided by DRF, if more performance is required, custom development is possible.
 
 ## Optimizations performed
 
@@ -101,7 +102,8 @@ When using model serializers there is a risk that they run extra queries to obta
             exists = model.objects.filter(id=id).exists()
             if exists:
                 return True
-            raise Http404('No %s matches the given query.' % model._meta.object_name)
+            raise NotFound('No %s matches the given query.' % model._meta.object_name)
+
     ```
 
 

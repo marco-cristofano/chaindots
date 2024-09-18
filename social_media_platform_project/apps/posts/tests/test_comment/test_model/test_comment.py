@@ -1,7 +1,7 @@
 from django.test import TestCase
+from apps.posts.services.comment import CommentService
 from apps.users.services.social_media_user import SocialMediaUserService
 from apps.posts.services.post import PostService
-from apps.posts.services.comment import CommentService
 
 
 class CommentTest(TestCase):

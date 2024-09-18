@@ -1,9 +1,12 @@
+from django_filters import rest_framework as filters
 from drf_spectacular.utils import extend_schema
+
 from rest_framework import (
     status,
     viewsets
 )
 from rest_framework.decorators import action
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from utils.exists_or_404 import exists_object_or_404
 
@@ -19,9 +22,6 @@ from apps.posts.serializers.post import (
     PostSerializer
 )
 from apps.posts.services.post import PostService
-
-from django_filters import rest_framework as filters
-from rest_framework.pagination import PageNumberPagination
 
 
 class PostsPagination(PageNumberPagination):

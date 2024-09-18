@@ -1,7 +1,8 @@
 from rest_framework import status
 from utils.tests.apt_test import CustomAPITestCase as APITestCase
-from apps.users.services.social_media_user import SocialMediaUserService
 from apps.posts.models.post import Post
+from apps.users.services.social_media_user import SocialMediaUserService
+
 
 
 class APICreatePostTest(APITestCase):

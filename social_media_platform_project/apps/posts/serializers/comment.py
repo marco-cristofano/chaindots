@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from apps.users.serializers.social_media_user import SocialMediaUserSerializer
+
 from apps.posts.models import Comment
+from apps.users.serializers.social_media_user import SocialMediaUserSerializer
 
 
 class CommentSerializer(serializers.ModelSerializer):

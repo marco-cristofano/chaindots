@@ -1,6 +1,6 @@
 from django.db import models
-from apps.posts.models.post import Post
 from apps.users.models import SocialMediaUser
+from apps.posts.models.post import Post
 
 
 class Comment(models.Model):

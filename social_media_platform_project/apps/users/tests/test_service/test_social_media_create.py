@@ -1,8 +1,8 @@
 from django.test import TestCase
 from rest_framework.authtoken.models import Token
 
-from apps.users.services.social_media_user import SocialMediaUserService
 from apps.users.models.social_media_user import SocialMediaUser
+from apps.users.services.social_media_user import SocialMediaUserService
 
 
 class SocialMedialServiceCreateTest(TestCase):
