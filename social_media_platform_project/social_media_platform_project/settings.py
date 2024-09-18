@@ -11,6 +11,8 @@ DEBUG = int(os.environ.get('DEBUG', 0))
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8081", "http://localhost:8081"]
 
+AUTH_USER_MODEL = 'users.SocialMediaUser'
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -64,8 +66,12 @@ WSGI_APPLICATION = 'social_media_platform_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('POSTGRES_NAME'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': os.environ.get('POSTGRES_HOST'),
+        'PORT': os.environ.get('POSTGRES_PORT')
     }
 }
 

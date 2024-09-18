@@ -32,6 +32,12 @@ The resolution was based on the requirements found in the file [Challenge](./CHA
     cd social_media_platform_project/
     python manage.py test --parallel
     ```
+- Running coverage (in container)
+    ```bash
+    coverage run --source="." manage.py test
+    ```
+
+
 
 - API Documentation: [Swagger](http://127.0.0.1:8081/swagger) 
 
@@ -48,11 +54,12 @@ The system has three services:
 
 - I generally avoided adding business logic to models and serializers. I preferred to develop services that contain the application logic “isolated” from the framework's own functionalities. Depending on the context of the system and its evolution this is correct.
 Django Rest Framework induces to have logic in the models and serializers.
-- The “Social media user” model inherits from the User model provided by Django. This is completely questionable since I am mixing system logic with framework logic. The only benefit is simplicity for development.
+- The “Social media user” model inherits from the AbstractUser model provided by Django. This is completely questionable since I am mixing system logic with framework logic. The only benefit is simplicity for development and the efficiency of using a single table
 - The standard for API parameter names was not specified. I decided to use the same names as the model attributes 
 - The definition of the URLs are outside of the applications, this does not necessarily have to be so. For this example I considered that it was not the responsibility of each application to define its URLs.
 - In general I used viewsets blocking some of their methods. However, it may be considered more appropriate to inherit directly from the appropriate mixins.
 - For simplicity and to use some of the Django Rest Framework tools I incorporated several ModelSerializers. In case you need to improve the performance of some endpoint you can exclude them and take their functionality to the query in the database.
+- Logical deletion was implemented in the models, this feature was not necessary.
 
 ## Optimizations performed
 

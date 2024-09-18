@@ -316,10 +316,6 @@ class APIListFilterFailsTest(APITestCase):
             'content3'
         )
 
-    @staticmethod
-    def datetime_to_str(datetime):
-        return datetime.strftime("%Y-%m-%d")
-
     def test_list_filter_bad_author(self):
         params = {
             'author_id': 'id'

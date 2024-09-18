@@ -18,10 +18,10 @@ class SocialMediaUserService:
         Returns:
             SocialMediaUser: New social media user
         """
-        sm_user = cls.model.objects.create(
+        sm_user = cls.model.user_model_manager.create_user(
             username=username,
             email=email,
-            password=password,
+            password=password
         )
         AuthTokenService.create_token(sm_user)
         return sm_user
