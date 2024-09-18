@@ -18,7 +18,7 @@ class SocialMediaUserService:
         Returns:
             SocialMediaUser: New social media user
         """
-        sm_user = cls.model.user_model_manager.create_user(
+        sm_user = cls.model.objects.create_user(
             username=username,
             email=email,
             password=password
@@ -31,10 +31,10 @@ class SocialMediaUserService:
         """Adds user to follow.
 
         Args:
-            user (int): id of user
-            user_to_follow (int): id of user to follow
+            user_id (int): id of user
+            user_to_follow_id (int): id of user to follow
         """
-        user = SocialMediaUser.objects.get(id=user_id)
+        user = cls.model.objects.get(id=user_id)
         user_to_follow = SocialMediaUser.objects.get(id=user_to_follow_id)
         user.followed.add(user_to_follow)
         user.save()

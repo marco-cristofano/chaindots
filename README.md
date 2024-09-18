@@ -36,6 +36,8 @@ The resolution was based on the requirements found in the file [Challenge](./CHA
     ```bash
     coverage run --source="." manage.py test
     ```
+    <img title="Coverage" alt="coverage" src="./coverage.png">
+
 
 
 
@@ -59,7 +61,6 @@ Django Rest Framework induces to have logic in the models and serializers.
 - The definition of the URLs are outside of the applications, this does not necessarily have to be so. For this example I considered that it was not the responsibility of each application to define its URLs.
 - In general I used viewsets blocking some of their methods. However, it may be considered more appropriate to inherit directly from the appropriate mixins.
 - For simplicity and to use some of the Django Rest Framework tools I incorporated several ModelSerializers. In case you need to improve the performance of some endpoint you can exclude them and take their functionality to the query in the database.
-- Logical deletion was implemented in the models, this feature was not necessary.
 
 ## Optimizations performed
 

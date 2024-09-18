@@ -1,10 +1,8 @@
 from django.db import models
-from utils.models.soft_delete import SoftDeleteModel
 from django.contrib.auth.models import AbstractUser
 
 
-class SocialMediaUser(SoftDeleteModel, AbstractUser):
-    user_model_manager = AbstractUser._default_manager
+class SocialMediaUser(AbstractUser):
     followed = models.ManyToManyField(
         'self',
         symmetrical=False,

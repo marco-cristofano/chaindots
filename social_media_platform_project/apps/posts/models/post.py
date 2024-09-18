@@ -1,9 +1,8 @@
 from django.db import models
 from apps.users.models import SocialMediaUser
-from utils.models.soft_delete import SoftDeleteModel
 
 
-class Post(SoftDeleteModel):
+class Post(models.Model):
     author = models.ForeignKey(
         SocialMediaUser,
         on_delete=models.CASCADE,
